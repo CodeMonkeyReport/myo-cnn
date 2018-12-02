@@ -1,14 +1,23 @@
 import cnn
+import keras
+from keras import layers
+from keras import backend
+import fnmatch
+import os
+import numpy as np
+import sklearn.metrics as metrics
 
 width_emg = 8
 width_acl = 4
 height = 250
 data_folder = 'data-v2-test'
-epochs = 1000
+epochs = 500
+letters = [chr(i) for i in range(ord('a'), ord('z')+1)]
+
 
 model = cnn.build_model()
 (X, Y) = cnn.get_data(letters, data_folder)
-model.load_weights('model_split.h5')
+model.load_weights('model_v2_clean_dropout_500.h5')
 
 res = model.evaluate([X[0].reshape(-1, height, width_emg, 1), X[1].reshape(-1, height, width_acl, 1)], Y, verbose=1)
 
